@@ -47,7 +47,7 @@ class KnapsackProblem(SearchProblem, ABC):
             if x == 1:
                 total += valuesAndWeights[1][w]
             w += 1
-        print("TOTAL: ",total," ","Capacity: ",capacityOfBackpack)
+        print("TOTAL: ", total, " ", "Capacity: ", capacityOfBackpack)
         return total <= capacityOfBackpack
 
     def actions(self, s):
@@ -105,13 +105,13 @@ class KnapsackProblem(SearchProblem, ABC):
             if self._is_valid(rnd_state):
                 return rnd_state
 
+if __name__ == '__main__':
+    problem = KnapsackProblem(initial_state=KnapsackProblem.state)
 
-problem = KnapsackProblem(initial_state=KnapsackProblem.state)
-
-result = hill_climbing(problem)
-print(result.path())
-print(result.state)
-print(result.value)
+    result = hill_climbing(problem)
+    print(result.path())
+    print(result.state)
+    print(result.value)
 
 
 # problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
