@@ -7,15 +7,16 @@ capacityOfBackpack = int(input('Please enter backpack Capacities: '))
 
 
 class KnapsackProblem(SearchProblem, ABC):
+
     """Knapsack problem."""
-    itemSize = int(input('Please write how many items: '))
+    itemSize = int(input('Please write how many items do you have: '))
     user_input = input('Please enter values of items(Leave a space for each item value Ex: 1 2 5 3) : ')
 
     my_tuple_values = tuple(int(item) for item in user_input.split())
 
     print(my_tuple_values)
 
-    user_input = input('Please enter weights of items(Leave a space for each item value Ex: 10 8 4 9) : ')
+    user_input = input('Please enter weights of items(Leave a space for each item value (Ex: 10 8 4 9): ')
 
     my_tuple_weights = tuple(int(item) for item in user_input.split())
 
@@ -40,7 +41,8 @@ class KnapsackProblem(SearchProblem, ABC):
         for x in range(self.itemSize):
             self._actions.append(('Change item {}'.format(x)))
 
-    def _is_valid(self, g):
+    @staticmethod
+    def _is_valid(g):
         total = 0
         w = 0
         for x in g:
@@ -55,20 +57,20 @@ class KnapsackProblem(SearchProblem, ABC):
         return [a for a in self._actions if self._is_valid(self.result(s, a))]
 
     def result(self, s, a):
-        tempState = tuple(s)
-        sendState = []
+        temp_state = tuple(s)
+        send_state = []
         for w in range(len(s)):
             if a == ('Change item {}'.format(w)):
                 if s[w] == 0:
                     s[w] = 1
                 else:
                     s[w] = 0
-            sendState.append(s[w])
+            send_state.append(s[w])
 
-        if self._is_valid(sendState):
-            return sendState
+        if self._is_valid(send_state):
+            return send_state
         else:
-            return tempState
+            return temp_state
 
     def value(self, s):
         total = 0
@@ -105,6 +107,7 @@ class KnapsackProblem(SearchProblem, ABC):
             if self._is_valid(rnd_state):
                 return rnd_state
 
+
 if __name__ == '__main__':
     problem = KnapsackProblem(initial_state=KnapsackProblem.state)
 
@@ -130,7 +133,7 @@ if __name__ == '__main__':
 # print(result2.path())
 # print(result2.state)
 
-#problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
-#result3 = genetic(problem2, population_size=50)
-#print(result3.path())
-#print(result3.value)
+# problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
+# result3 = genetic(problem2, population_size=50)
+# print(result3.path())
+# print(result3.value)
