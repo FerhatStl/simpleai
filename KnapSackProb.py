@@ -1,7 +1,7 @@
 from abc import ABC
 import random
 
-from simpleai.search import SearchProblem, hill_climbing, genetic
+from simpleai.search import SearchProblem, hill_climbing, genetic, hill_climbing_random_restarts
 
 capacityOfBackpack = int(input('Please enter backpack Capacities: '))
 
@@ -108,12 +108,13 @@ class KnapsackProblem(SearchProblem, ABC):
 
 
 if __name__ == '__main__':
-    problem = KnapsackProblem(initial_state=KnapsackProblem.state)
+    problem3 = KnapsackProblem(initial_state=KnapsackProblem.state)
+    result3 = genetic(problem3, population_size=50)
+    print("\nGenetic Result: ")
+    print(result3.path())
+    print(result3.state)
+    print(result3.value)
 
-    result = hill_climbing(problem)
-    print(result.path())
-    print(result.state)
-    print(result.value)
 
 
 # problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
