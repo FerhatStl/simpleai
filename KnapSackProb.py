@@ -49,7 +49,6 @@ class KnapsackProblem(SearchProblem, ABC):
             if x == 1:
                 total += valuesAndWeights[1][w]
             w += 1
-        print("TOTAL: ", total, " ", "Capacity: ", capacityOfBackpack)
         return total <= capacityOfBackpack
 
     def actions(self, s):
