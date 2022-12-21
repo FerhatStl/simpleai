@@ -1,14 +1,16 @@
+import sys
 from abc import ABC
 import random
-
 from simpleai.search import SearchProblem, hill_climbing, genetic, hill_climbing_random_restarts
 
 capacityOfBackpack = int(input('Please enter backpack Capacities: '))
 
 
 class KnapsackProblem(SearchProblem, ABC):
+    print("""----------------------------------------------------------
+-------------- Welcome To Knapsack Problem ---------------
+----------------------------------------------------------""")
 
-    """Knapsack problem."""
     itemSize = int(input('Please write how many items do you have: '))
     user_input = input('Please enter values of items(Leave a space for each item value Ex: 1 2 5 3) : ')
 
@@ -55,21 +57,19 @@ class KnapsackProblem(SearchProblem, ABC):
 
         return [a for a in self._actions if self._is_valid(self.result(s, a))]
 
-    def result(self, s, a):
-        temp_state = tuple(s)
-        send_state = []
-        for w in range(len(s)):
-            if a == ('Change item {}'.format(w)):
-                if s[w] == 0:
-                    s[w] = 1
+    def result(self, state, action):
+        temp_state = list(state)
+        for w in range(len(state)):
+            if action == ('Change item {}'.format(w)):
+                if temp_state[w] == 0:
+                    temp_state[w] = 1
                 else:
-                    s[w] = 0
-            send_state.append(s[w])
+                    temp_state[w] = 0
 
-        if self._is_valid(send_state):
-            return send_state
-        else:
+        if self._is_valid(temp_state):
             return temp_state
+        else:
+            return state
 
     def value(self, s):
         total = 0
@@ -108,32 +108,25 @@ class KnapsackProblem(SearchProblem, ABC):
 
 
 if __name__ == '__main__':
-    problem3 = KnapsackProblem(initial_state=KnapsackProblem.state)
-    result3 = genetic(problem3, population_size=50)
-    print("\nGenetic Result: ")
-    print(result3.path())
-    print(result3.state)
-    print(result3.value)
-
-
-
-# problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
-# result2 = genetic(problem2, population_size=100, mutation_chance=0.1, iterations_limit=0, viewer=None)
-# print(result2.path())
-# print(result2.state)
-
-# problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
-# result2 = hill_climbing_random_restarts(problem2, restarts_limit=10, iterations_limit=0, viewer=None)
-# print(result2.path())
-# print(result2.state)
-
-
-# problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
-# result2 = genetic(problem2, population_size=100, mutation_chance=0.1, iterations_limit=0, viewer=None)
-# print(result2.path())
-# print(result2.state)
-
-# problem2 = KnapsackProblem(initial_state=KnapsackProblem.state)
-# result3 = genetic(problem2, population_size=50)
-# print(result3.path())
-# print(result3.value)
+    print("""--------------------List of Algorithms--------------------
+    1. Genetic
+    2. Hill Climbing
+    3. Hill Climbing Random Restart
+----------------------------------------------------------""")
+    while True:
+        input1 = int(input("Please write the number of the algorithm you want to use: "))
+        print("----------------------------------------------------------")
+        problem = KnapsackProblem(initial_state=KnapsackProblem.state)
+        if input1 == 1:
+            result = genetic(problem, population_size=100, mutation_chance=0.1, iterations_limit=0, viewer=None)
+        elif input1 == 2:
+            result = hill_climbing(problem, iterations_limit=0, viewer=None)
+        elif input1 == 3:
+            input2 = int(input("Please write restart limit:"))
+            result = hill_climbing_random_restarts(problem, restarts_limit=input2, iterations_limit=0, viewer=None)
+        else:
+            print("The input is not valid. The program will exit.")
+            sys.exit()
+        print(result.path())
+        print(result.state)
+        print(result.value)
