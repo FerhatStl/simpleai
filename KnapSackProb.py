@@ -53,9 +53,9 @@ class KnapsackProblem(SearchProblem, ABC):
             w += 1
         return total <= capacityOfBackpack
 
-    def actions(self, s):
+    def actions(self, state):
 
-        return [a for a in self._actions if self._is_valid(self.result(s, a))]
+        return [a for a in self._actions if self._is_valid(self.result(state, a))]
 
     def result(self, state, action):
         temp_state = list(state)
@@ -71,10 +71,10 @@ class KnapsackProblem(SearchProblem, ABC):
         else:
             return state
 
-    def value(self, s):
+    def value(self, state):
         total = 0
         i = 0
-        for x in s:
+        for x in state:
             if x == 1:
                 total += valuesAndWeights[0][i]
             i += 1
@@ -87,15 +87,15 @@ class KnapsackProblem(SearchProblem, ABC):
             if self._is_valid(child):
                 return child
 
-    def mutate(self, s):
+    def mutate(self, state):
         while True:
-            mutation = random.choice(s)
-            if s[mutation] == 0:
-                s[mutation] = 1
+            mutation = random.choice(state)
+            if state[mutation] == 0:
+                state[mutation] = 1
             else:
-                s[mutation] = 0
-            if self._is_valid(s):
-                return s
+                state[mutation] = 0
+            if self._is_valid(state):
+                return state
 
     def generate_random_state(self):
         while True:
