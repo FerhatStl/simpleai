@@ -3,14 +3,13 @@ from abc import ABC
 import random
 from simpleai.search import SearchProblem, hill_climbing, genetic, hill_climbing_random_restarts
 
+print("""----------------------------------------------------------
+-------------- Welcome To Knapsack Problem ---------------
+----------------------------------------------------------""")
 capacityOfBackpack = int(input('Please enter backpack Capacities: '))
 
 
 class KnapsackProblem(SearchProblem, ABC):
-    print("""----------------------------------------------------------
--------------- Welcome To Knapsack Problem ---------------
-----------------------------------------------------------""")
-
     itemSize = int(input('Please write how many items do you have: '))
     user_input = input('Please enter values of items(Leave a space for each item value Ex: 1 2 5 3) : ')
 
