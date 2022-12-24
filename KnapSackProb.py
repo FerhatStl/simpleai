@@ -53,7 +53,6 @@ class KnapsackProblem(SearchProblem, ABC):
         return total <= capacityOfBackpack
 
     def actions(self, state):
-
         return [a for a in self._actions if self._is_valid(self.result(state, a))]
 
     def result(self, state, action):
@@ -65,10 +64,10 @@ class KnapsackProblem(SearchProblem, ABC):
                 else:
                     temp_state[w] = 0
 
-        if self._is_valid(temp_state):
-            return temp_state
-        else:
-            return state
+        #if self._is_valid(temp_state):
+        #    return temp_state
+        #else:
+        return temp_state
 
     def value(self, state):
         total = 0
@@ -77,7 +76,10 @@ class KnapsackProblem(SearchProblem, ABC):
             if x == 1:
                 total += valuesAndWeights[0][i]
             i += 1
-        return total
+        if self._is_valid(state):
+            return total
+        else:
+            return 0
 
     def crossover(self, state1, state2):
         while True:
@@ -117,9 +119,12 @@ if __name__ == '__main__':
         print("----------------------------------------------------------")
         problem = KnapsackProblem(initial_state=KnapsackProblem.state)
         if input1 == 1:
-            result = genetic(problem, population_size=100, mutation_chance=0.1, iterations_limit=0, viewer=None)
+            inputPopSize = int(input("Please write population size:"))
+            inputMutChan = float(input("Please write mutation_chance:"))
+            result = genetic(problem, inputPopSize, inputMutChan, iterations_limit=0, viewer=None)
         elif input1 == 2:
-            result = hill_climbing(problem, iterations_limit=0, viewer=None)
+            inputItLim = int(input("Please write iterations_limit:"))
+            result = hill_climbing(problem, inputItLim, viewer=None)
         elif input1 == 3:
             input2 = int(input("Please write restart limit:"))
             result = hill_climbing_random_restarts(problem, restarts_limit=input2, iterations_limit=0, viewer=None)
