@@ -63,10 +63,6 @@ class KnapsackProblem(SearchProblem, ABC):
                     temp_state[w] = 1
                 else:
                     temp_state[w] = 0
-
-        #if self._is_valid(temp_state):
-        #    return temp_state
-        #else:
         return temp_state
 
     def value(self, state):
